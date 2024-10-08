@@ -20,15 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_unset(); // Unset all session variables
         session_destroy(); // Destroy the session
     } elseif ($guess < $target_number) {
-        $message = "Too low! Try again.";
+        $message = "Too low! Try again.You already guessed ". $guesses. "times.";
     } else {
-        $message = "Too high! Try again.";
+        $message = "Too high! Try again.You already guessed ". $guesses ." times.";
     }
 
     // Update the session with the new number of guesses
     $_SESSION['guesses'] = $guesses;
 }
 
+if (isset($_POST['giveup'])) {
+    echo "the correct number is $target_number. ";
+    session_unset(); // Unset all session variables
+    session_destroy(); // Destroy the session
+}
 // Return the message to be displayed
 if (isset($message)) {
     echo $message;
